@@ -347,7 +347,7 @@ textarea {
   padding-top: 8px;
 }
 
-/* BYCO VISION IMAGE PREVIEW */
+/* IMAGE PREVIEW */
 
 .image-preview-box {
   display: none;
@@ -387,6 +387,68 @@ textarea {
   color: #45d9ff;
   font-size: 11px;
   padding: 4px 3px 0;
+}
+
+/* CAMERA MODAL */
+
+.camera-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0,0,0,.88);
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+}
+
+.camera-content {
+  width: 100%;
+  max-width: 520px;
+  background: #101b30;
+  border: 1px solid #45d9ff;
+  border-radius: 16px;
+  padding: 15px;
+  box-shadow: 0 0 35px #168bff55;
+}
+
+.camera-content h3 {
+  color: #45d9ff;
+  margin-bottom: 12px;
+}
+
+#cameraVideo {
+  width: 100%;
+  max-height: 55vh;
+  background: #000;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.camera-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.camera-buttons button {
+  flex: 1;
+  padding: 12px;
+  border: 0;
+  border-radius: 9px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.capture-btn {
+  background: #45d9ff;
+  color: #081426;
+}
+
+.close-camera-btn {
+  background: #a77aff;
+  color: white;
 }
 
 /* HOLOGRAM */
@@ -515,7 +577,7 @@ textarea {
   border-radius: 30px;
   color: #a9eaff;
   font-size: 13px;
-  box-shadow: 0 0 20px #178bff33;
+  text-align: center;
 }
 
 .status-dot {
@@ -597,7 +659,6 @@ textarea {
   .input-box { gap: 5px; }
   .action { font-size: 19px; }
 }
-
 </style>
 </head>
 
@@ -685,6 +746,7 @@ textarea {
         <section class="input-section">
 
           <!-- IMAGE PREVIEW -->
+
           <div class="image-preview-box" id="imagePreviewBox">
             <button class="remove-image" onclick="removeImage()">×</button>
             <img id="imagePreview" alt="Selected image preview">
@@ -693,7 +755,8 @@ textarea {
 
           <div class="input-box">
 
-            <!-- IMAGE UPLOAD BUTTON -->
+            <!-- IMAGE UPLOAD -->
+
             <input
               type="file"
               id="imageInput"
@@ -705,6 +768,12 @@ textarea {
             <button class="action"
               onclick="document.getElementById('imageInput').click()"
               title="Upload image">📎</button>
+
+            <!-- CAMERA BUTTON -->
+
+            <button class="action"
+              onclick="openCamera()"
+              title="Open camera">📷</button>
 
             <textarea id="messageInput"
               placeholder="Message BYCO..."
@@ -769,6 +838,30 @@ textarea {
   </main>
 </div>
 
+<!-- CAMERA MODAL -->
+
+<div class="camera-modal" id="cameraModal">
+  <div class="camera-content">
+
+    <h3>📷 BYCO Camera</h3>
+
+    <video id="cameraVideo" autoplay playsinline></video>
+
+    <canvas id="cameraCanvas" hidden></canvas>
+
+    <div class="camera-buttons">
+      <button class="capture-btn" onclick="capturePhoto()">
+        📸 Capture Photo
+      </button>
+
+      <button class="close-camera-btn" onclick="closeCamera()">
+        ✕ Close
+      </button>
+    </div>
+
+  </div>
+</div>
+
 <script>
 
 const input = document.getElementById("messageInput");
@@ -792,6 +885,10 @@ let busy = false;
 
 let selectedImage = null;
 let selectedImageData = null;
+
+/* CAMERA STATE */
+
+let cameraStream = null;
 
 /* IMAGE UPLOAD */
 
@@ -850,6 +947,108 @@ function removeImage() {
   document.getElementById("imagePreviewBox").style.display = "none";
   document.getElementById("imageInput").value = "";
 
+}
+
+/* CAMERA FEATURE */
+
+async function openCamera() {
+
+  const video = document.getElementById("cameraVideo");
+  const modal = document.getElementById("cameraModal");
+
+  if (!navigator.mediaDevices ||
+      !navigator.mediaDevices.getUserMedia) {
+
+    alert("Camera requires HTTPS or localhost.");
+    return;
+  }
+
+  try {
+
+    cameraStream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        facingMode: { ideal: "environment" }
+      },
+      audio: false
+    });
+
+    video.srcObject = cameraStream;
+
+    modal.style.display = "flex";
+
+    await video.play();
+
+  } catch (error) {
+
+    console.error("Camera error:", error);
+
+    alert(
+      "Camera could not open. Please allow camera permission and try again."
+    );
+
+  }
+}
+
+function capturePhoto() {
+
+  const video = document.getElementById("cameraVideo");
+  const canvas = document.getElementById("cameraCanvas");
+
+  if (!cameraStream || !video.videoWidth) {
+    alert("Camera is not ready yet.");
+    return;
+  }
+
+  const maxWidth = 1600;
+  const scale = Math.min(1, maxWidth / video.videoWidth);
+
+  canvas.width = Math.round(video.videoWidth * scale);
+  canvas.height = Math.round(video.videoHeight * scale);
+
+  const context = canvas.getContext("2d");
+
+  context.drawImage(
+    video,
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+  const imageData = canvas.toDataURL("image/jpeg", 0.85);
+
+  if (imageData.length > 6.8 * 1024 * 1024) {
+    alert("Photo is too large. Please try again.");
+    return;
+  }
+
+  selectedImageData = imageData;
+  selectedImage = null;
+
+  document.getElementById("imagePreview").src = imageData;
+  document.getElementById("imagePreviewBox").style.display = "block";
+
+  document.getElementById("imageInput").value = "";
+
+  closeCamera();
+
+  input.focus();
+}
+
+function closeCamera() {
+
+  if (cameraStream) {
+
+    cameraStream.getTracks().forEach(track => {
+      track.stop();
+    });
+
+    cameraStream = null;
+  }
+
+  document.getElementById("cameraVideo").srcObject = null;
+
+  document.getElementById("cameraModal").style.display = "none";
 }
 
 /* AVATAR STATES */
@@ -928,33 +1127,37 @@ function addMessage(role, text, imageData = null) {
   const message = document.createElement("div");
   message.className = "message " + role;
 
-  let imageHTML = "";
-
-  if (imageData && role === "user") {
-    imageHTML = `
-      <div style="margin-bottom:8px">
-        <img
-          src="${imageData}"
-          alt="Uploaded image"
-          style="max-width:180px;max-height:140px;object-fit:contain;border-radius:10px;display:block"
-        >
-      </div>
-    `;
-  }
+  const bubble = document.createElement("div");
+  bubble.className = "bubble";
 
   if (role === "user") {
 
-    message.innerHTML =
-      '<div class="bubble">' +
-      imageHTML +
-      formatText(text) +
-      '</div>';
+    if (imageData) {
+      const image = document.createElement("img");
+      image.src = imageData;
+      image.alt = "Uploaded image";
+      image.style.maxWidth = "180px";
+      image.style.maxHeight = "140px";
+      image.style.objectFit = "contain";
+      image.style.borderRadius = "10px";
+      image.style.display = "block";
+      image.style.marginBottom = "8px";
+      bubble.appendChild(image);
+    }
+
+    bubble.insertAdjacentHTML("beforeend", formatText(text));
+    message.appendChild(bubble);
 
   } else {
 
-    message.innerHTML =
-      '<div class="message-icon">✦</div>' +
-      '<div class="bubble">' + formatText(text) + '</div>';
+    const icon = document.createElement("div");
+    icon.className = "message-icon";
+    icon.textContent = "✦";
+
+    bubble.innerHTML = formatText(text);
+
+    message.appendChild(icon);
+    message.appendChild(bubble);
 
   }
 
@@ -1012,6 +1215,7 @@ function newChat() {
   input.value = "";
 
   removeImage();
+  closeCamera();
 
   if ("speechSynthesis" in window) {
     window.speechSynthesis.cancel();
@@ -1091,7 +1295,11 @@ async function sendMessage() {
   input.value = "";
   input.style.height = "28px";
 
-  addMessage("user", text || "Please analyze this image.", imageToSend);
+  addMessage(
+    "user",
+    text || "Please analyze this image.",
+    imageToSend
+  );
 
   removeImage();
 
@@ -1355,20 +1563,14 @@ function startVoice() {
   const selected = languageSelect.value;
 
   if (selected === "Hindi") {
-
     recognition.lang = "hi-IN";
-
   } else if (
     selected === "Urdu" ||
     selected === "Roman Urdu"
   ) {
-
     recognition.lang = "hi-IN";
-
   } else {
-
     recognition.lang = "en-IN";
-
   }
 
   recognition.interimResults = false;
