@@ -43,7 +43,7 @@ body {
 .sidebar {
   width: 225px;
   flex-shrink: 0;
-  background: rgba(8, 15, 29, .96);
+  background: rgba(8,15,29,.96);
   padding: 20px 14px;
   display: flex;
   flex-direction: column;
@@ -107,7 +107,7 @@ body {
   color: #b6c4db;
 }
 
-/* MAIN WORKSPACE */
+/* MAIN */
 
 .main {
   flex: 1;
@@ -124,12 +124,11 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 0 22px;
-  background: rgba(10, 20, 38, .75);
+  background: rgba(10,20,38,.75);
 }
 
 .topbar h2 {
   font-size: 19px;
-  font-weight: 600;
   color: #dceaff;
 }
 
@@ -141,25 +140,23 @@ select {
   border-radius: 8px;
 }
 
-/* CHAT LEFT + AVATAR RIGHT */
-
 .workspace {
   flex: 1;
   min-height: 0;
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(300px, .85fr);
+  grid-template-columns: minmax(0,1.15fr) minmax(300px,.85fr);
   gap: 10px;
   padding: 12px;
 }
 
-/* CHAT SIDE */
+/* CHAT */
 
 .chat-panel {
   min-width: 0;
   min-height: 0;
   display: flex;
   flex-direction: column;
-  background: rgba(13, 25, 45, .88);
+  background: rgba(13,25,45,.88);
   border: 1px solid #294568;
   border-radius: 17px;
   overflow: hidden;
@@ -183,7 +180,7 @@ select {
   height: 70px;
   margin: auto auto 18px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #3b8cff, #a77aff);
+  background: linear-gradient(135deg,#3b8cff,#a77aff);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -203,7 +200,7 @@ select {
 
 .suggestions {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2,1fr);
   gap: 10px;
   margin: 25px auto;
 }
@@ -326,6 +323,10 @@ textarea {
   padding: 5px;
 }
 
+.action:hover {
+  color: var(--cyan);
+}
+
 .send {
   background: #a77aff;
   color: #101326;
@@ -346,7 +347,49 @@ textarea {
   padding-top: 8px;
 }
 
-/* HOLOGRAM RIGHT SIDE */
+/* BYCO VISION IMAGE PREVIEW */
+
+.image-preview-box {
+  display: none;
+  position: relative;
+  width: fit-content;
+  max-width: 190px;
+  margin: 0 0 10px 4px;
+  padding: 6px;
+  background: #172844;
+  border: 1px solid #45d9ff77;
+  border-radius: 12px;
+}
+
+.image-preview-box img {
+  display: block;
+  max-width: 165px;
+  max-height: 110px;
+  border-radius: 8px;
+  object-fit: contain;
+}
+
+.remove-image {
+  position: absolute;
+  top: -9px;
+  right: -9px;
+  width: 25px;
+  height: 25px;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  background: #a77aff;
+  color: #101326;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.image-label {
+  color: #45d9ff;
+  font-size: 11px;
+  padding: 4px 3px 0;
+}
+
+/* HOLOGRAM */
 
 .hologram-panel {
   position: relative;
@@ -355,8 +398,8 @@ textarea {
   border: 1px solid #294d78;
   border-radius: 17px;
   background:
-    radial-gradient(ellipse at 50% 65%, #164c82 0%, transparent 48%),
-    linear-gradient(180deg, #101d35, #081426);
+    radial-gradient(ellipse at 50% 65%,#164c82 0%,transparent 48%),
+    linear-gradient(180deg,#101d35,#081426);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -384,8 +427,6 @@ textarea {
   margin-top: 7px;
 }
 
-/* AVATAR */
-
 .avatar-stage {
   width: 100%;
   height: 78%;
@@ -402,34 +443,26 @@ textarea {
   border-radius: 50%;
   background: #16aaff22;
   filter: blur(35px);
-  animation: glow 3s ease-in-out infinite alternate;
+  animation: none;
 }
 
 .avatar-image {
   position: relative;
   z-index: 2;
-  width: min(95%, 390px);
+  width: min(95%,390px);
   max-height: 100%;
   object-fit: contain;
-  filter:
-    drop-shadow(0 0 12px #38caff)
-    drop-shadow(0 0 35px #177bff55);
-  animation: idleFloat 4s ease-in-out infinite;
-  transition: transform .35s ease, filter .35s ease;
+  filter: drop-shadow(0 0 12px #38caff)
+          drop-shadow(0 0 35px #177bff55);
+  animation: none;
+  transition: transform .35s ease,filter .35s ease;
 }
 
 .avatar-image.speaking {
   animation: speakingMove .8s ease-in-out infinite alternate;
-  filter:
-    drop-shadow(0 0 17px #49e5ff)
-    drop-shadow(0 0 45px #1e9dff);
+  filter: drop-shadow(0 0 17px #49e5ff)
+          drop-shadow(0 0 45px #1e9dff);
 }
-
-.avatar-image.listening {
-  animation: listeningMove 2s ease-in-out infinite;
-}
-
-/* RINGS */
 
 .ring {
   position: absolute;
@@ -440,21 +473,35 @@ textarea {
   box-shadow: 0 0 20px #1c9fff22;
 }
 
-.ring.one {
-  animation: rotate 12s linear infinite;
-}
+.ring.one { animation: none; }
 
 .ring.two {
   width: 320px;
   height: 320px;
   border-style: dashed;
-  animation: rotateReverse 18s linear infinite;
+  animation: none;
 }
 
 .ring.three {
   width: 250px;
   height: 250px;
   border-color: #a77aff66;
+  animation: none;
+}
+
+.hologram-panel.speaking .avatar-glow {
+  animation: glow 3s ease-in-out infinite alternate;
+}
+
+.hologram-panel.speaking .ring.one {
+  animation: rotate 12s linear infinite;
+}
+
+.hologram-panel.speaking .ring.two {
+  animation: rotateReverse 18s linear infinite;
+}
+
+.hologram-panel.speaking .ring.three {
   animation: rotate 9s linear infinite;
 }
 
@@ -489,19 +536,9 @@ textarea {
 
 /* ANIMATIONS */
 
-@keyframes idleFloat {
-  0%,100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-9px) rotate(1deg); }
-}
-
 @keyframes speakingMove {
   from { transform: translateY(0) rotate(-1deg) scale(1); }
   to { transform: translateY(-7px) rotate(1deg) scale(1.025); }
-}
-
-@keyframes listeningMove {
-  0%,100% { transform: translateY(0) rotate(0); }
-  50% { transform: translateY(-5px) rotate(1deg); }
 }
 
 @keyframes rotate {
@@ -531,68 +568,41 @@ textarea {
 
   .workspace {
     grid-template-columns: 1fr;
-    grid-template-rows: minmax(0, 1fr) 260px;
+    grid-template-rows: minmax(0,1fr) 260px;
   }
 
-  .hologram-panel {
-    grid-row: 2;
-  }
+  .hologram-panel { grid-row: 2; }
+  .avatar-stage { height: 80%; }
+  .avatar-image { width: 180px; }
 
-  .avatar-stage {
-    height: 80%;
-  }
+  .ring { width: 180px; height: 180px; }
+  .ring.two { width: 205px; height: 205px; }
+  .ring.three { width: 155px; height: 155px; }
 
-  .avatar-image {
-    width: 180px;
-  }
-
-  .ring {
-    width: 180px;
-    height: 180px;
-  }
-
-  .ring.two {
-    width: 205px;
-    height: 205px;
-  }
-
-  .ring.three {
-    width: 155px;
-    height: 155px;
-  }
-
-  .holo-title {
-    top: 10px;
-  }
-
-  .holo-status {
-    bottom: 10px;
-  }
+  .holo-title { top: 10px; }
+  .holo-status { bottom: 10px; }
 }
 
 @media(max-width:480px) {
-  .suggestions {
-    grid-template-columns: 1fr;
-  }
-
-  .welcome h1 {
-    font-size: 23px;
-  }
-
-  .topbar {
-    padding: 0 12px;
-  }
+  .suggestions { grid-template-columns: 1fr; }
+  .welcome h1 { font-size: 23px; }
+  .topbar { padding: 0 12px; }
 
   .workspace {
     padding: 7px;
     gap: 7px;
-    grid-template-rows: minmax(0, 1fr) 220px;
+    grid-template-rows: minmax(0,1fr) 220px;
   }
+
+  .input-box { gap: 5px; }
+  .action { font-size: 19px; }
 }
+
 </style>
 </head>
 
 <body>
+
 <div class="app">
 
   <aside class="sidebar">
@@ -627,8 +637,6 @@ textarea {
     </header>
 
     <div class="workspace">
-
-      <!-- LEFT: CHAT -->
 
       <section class="chat-panel">
 
@@ -676,7 +684,27 @@ textarea {
 
         <section class="input-section">
 
+          <!-- IMAGE PREVIEW -->
+          <div class="image-preview-box" id="imagePreviewBox">
+            <button class="remove-image" onclick="removeImage()">×</button>
+            <img id="imagePreview" alt="Selected image preview">
+            <div class="image-label">BYCO Vision Image</div>
+          </div>
+
           <div class="input-box">
+
+            <!-- IMAGE UPLOAD BUTTON -->
+            <input
+              type="file"
+              id="imageInput"
+              accept="image/png,image/jpeg,image/webp"
+              hidden
+              onchange="handleImageUpload(event)"
+            >
+
+            <button class="action"
+              onclick="document.getElementById('imageInput').click()"
+              title="Upload image">📎</button>
 
             <textarea id="messageInput"
               placeholder="Message BYCO..."
@@ -704,7 +732,7 @@ textarea {
 
       </section>
 
-      <!-- RIGHT: FEMALE HOLOGRAM -->
+      <!-- HOLOGRAM -->
 
       <section class="hologram-panel" id="hologramPanel">
 
@@ -722,7 +750,7 @@ textarea {
           <div class="ring three"></div>
 
           <img
-            src="byco-avatar(2).png"
+            src="byco-avatar (2).png"
             id="avatarImage"
             class="avatar-image"
             alt="BYCO AI hologram assistant"
@@ -742,6 +770,7 @@ textarea {
 </div>
 
 <script>
+
 const input = document.getElementById("messageInput");
 const messages = document.getElementById("messages");
 const chatArea = document.getElementById("chatArea");
@@ -749,7 +778,6 @@ const welcome = document.getElementById("welcome");
 const sendButton = document.getElementById("sendButton");
 const historyBox = document.getElementById("history");
 const languageSelect = document.getElementById("language");
-
 const avatarImage = document.getElementById("avatarImage");
 const hologramPanel = document.getElementById("hologramPanel");
 const statusText = document.getElementById("statusText");
@@ -759,50 +787,116 @@ let conversations = [];
 let currentChatId = Date.now();
 let speechEnabled = true;
 let busy = false;
-let speakingFallbackTimer = null;
+
+/* BYCO VISION STATE */
+
+let selectedImage = null;
+let selectedImageData = null;
+
+/* IMAGE UPLOAD */
+
+function handleImageUpload(event) {
+
+  const file = event.target.files[0];
+
+  if (!file) return;
+
+  const allowedTypes = [
+    "image/jpeg",
+    "image/png",
+    "image/webp"
+  ];
+
+  if (!allowedTypes.includes(file.type)) {
+    alert("Please select a JPG, PNG or WEBP image.");
+    event.target.value = "";
+    return;
+  }
+
+  if (file.size > 5 * 1024 * 1024) {
+    alert("Image size must be less than 5 MB.");
+    event.target.value = "";
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = () => {
+
+    selectedImage = file;
+    selectedImageData = reader.result;
+
+    document.getElementById("imagePreview").src = selectedImageData;
+    document.getElementById("imagePreviewBox").style.display = "block";
+
+    input.focus();
+
+  };
+
+  reader.onerror = () => {
+    alert("Could not read this image. Please try another.");
+  };
+
+  reader.readAsDataURL(file);
+
+}
+
+function removeImage() {
+
+  selectedImage = null;
+  selectedImageData = null;
+
+  document.getElementById("imagePreview").src = "";
+  document.getElementById("imagePreviewBox").style.display = "none";
+  document.getElementById("imageInput").value = "";
+
+}
 
 /* AVATAR STATES */
 
 function setAvatarState(state) {
-  clearTimeout(speakingFallbackTimer);
 
-  avatarImage.classList.remove("speaking", "listening");
+  avatarImage.classList.remove("speaking");
   hologramPanel.classList.remove("speaking");
 
   if (state === "speaking") {
+
     avatarImage.classList.add("speaking");
     hologramPanel.classList.add("speaking");
     statusText.textContent = "Speaking...";
 
   } else if (state === "listening") {
-    avatarImage.classList.add("listening");
+
     statusText.textContent = "Listening...";
 
   } else if (state === "thinking") {
+
     statusText.textContent = "Thinking...";
 
   } else {
+
     statusText.textContent = "Ready to help you";
+
   }
 }
 
-/* HTML SECURITY */
+/* SAFE TEXT FORMATTING */
 
 function escapeHTML(text) {
+
   const map = {
     "&": "&amp;",
     "<": "&lt;",
     ">": "&gt;",
     '"': "&quot;",
-    "'": "&#39;"
+    "'": "&#039;"
   };
 
   return String(text).replace(/[&<>"']/g, char => map[char]);
 }
 
-/* SCREEN FORMATTING */
-
 function formatText(text) {
+
   let safe = escapeHTML(text);
 
   safe = safe.replace(
@@ -827,19 +921,41 @@ function formatText(text) {
 
 /* ADD MESSAGE */
 
-function addMessage(role, text) {
+function addMessage(role, text, imageData = null) {
+
   welcome.style.display = "none";
 
   const message = document.createElement("div");
   message.className = "message " + role;
 
+  let imageHTML = "";
+
+  if (imageData && role === "user") {
+    imageHTML = `
+      <div style="margin-bottom:8px">
+        <img
+          src="${imageData}"
+          alt="Uploaded image"
+          style="max-width:180px;max-height:140px;object-fit:contain;border-radius:10px;display:block"
+        >
+      </div>
+    `;
+  }
+
   if (role === "user") {
+
     message.innerHTML =
-      '<div class="bubble">' + formatText(text) + '</div>';
+      '<div class="bubble">' +
+      imageHTML +
+      formatText(text) +
+      '</div>';
+
   } else {
+
     message.innerHTML =
       '<div class="message-icon">✦</div>' +
       '<div class="bubble">' + formatText(text) + '</div>';
+
   }
 
   messages.appendChild(message);
@@ -849,18 +965,23 @@ function addMessage(role, text) {
 /* CHAT HISTORY */
 
 function updateHistory() {
+
   historyBox.innerHTML = "";
 
   conversations.forEach(chat => {
+
     const item = document.createElement("div");
     item.className = "history-item";
     item.textContent = chat.title;
     item.onclick = () => openChat(chat.id);
+
     historyBox.appendChild(item);
+
   });
 }
 
 function saveCurrentChat() {
+
   if (chatHistory.length === 0) return;
 
   const existing = conversations.find(
@@ -873,29 +994,43 @@ function saveCurrentChat() {
     history: [...chatHistory]
   };
 
-  if (existing) Object.assign(existing, chatData);
-  else conversations.unshift(chatData);
+  if (existing) {
+    Object.assign(existing, chatData);
+  } else {
+    conversations.unshift(chatData);
+  }
 
   updateHistory();
 }
 
 function newChat() {
+
   currentChatId = Date.now();
   chatHistory = [];
   messages.innerHTML = "";
   welcome.style.display = "block";
   input.value = "";
 
+  removeImage();
+
   if ("speechSynthesis" in window) {
     window.speechSynthesis.cancel();
   }
+
+  busy = false;
+  sendButton.disabled = false;
 
   setAvatarState("idle");
 }
 
 function openChat(id) {
+
   const chat = conversations.find(c => c.id === id);
   if (!chat) return;
+
+  if ("speechSynthesis" in window) {
+    window.speechSynthesis.cancel();
+  }
 
   currentChatId = chat.id;
   chatHistory = [...chat.history];
@@ -903,10 +1038,13 @@ function openChat(id) {
   welcome.style.display = "none";
 
   chatHistory.forEach(item => {
+
     addMessage(
       item.role === "user" ? "user" : "ai",
-      item.text
+      item.text,
+      item.imageData || null
     );
+
   });
 
   setAvatarState("idle");
@@ -920,24 +1058,32 @@ function useSuggestion(text) {
 /* INPUT EVENTS */
 
 input.addEventListener("keydown", event => {
+
   if (event.key === "Enter" && !event.shiftKey) {
     event.preventDefault();
     sendMessage();
   }
+
 });
 
 input.addEventListener("input", () => {
+
   input.style.height = "auto";
+
   input.style.height =
     Math.min(input.scrollHeight, 130) + "px";
+
 });
 
 /* SEND MESSAGE */
 
 async function sendMessage() {
+
   const text = input.value.trim();
 
-  if (!text || busy) return;
+  if ((!text && !selectedImageData) || busy) return;
+
+  const imageToSend = selectedImageData;
 
   busy = true;
   sendButton.disabled = true;
@@ -945,27 +1091,38 @@ async function sendMessage() {
   input.value = "";
   input.style.height = "28px";
 
-  addMessage("user", text);
+  addMessage("user", text || "Please analyze this image.", imageToSend);
+
+  removeImage();
+
   setAvatarState("thinking");
 
   const typing = document.createElement("div");
   typing.className = "typing";
-  typing.textContent = "BYCO is thinking...";
-  messages.appendChild(typing);
+  typing.textContent = imageToSend
+    ? "BYCO Vision is analyzing your image..."
+    : "BYCO is thinking...";
 
+  messages.appendChild(typing);
   chatArea.scrollTop = chatArea.scrollHeight;
 
   try {
+
     const response = await fetch("/api/chat", {
+
       method: "POST",
+
       headers: {
         "Content-Type": "application/json"
       },
+
       body: JSON.stringify({
-        message: text,
+        message: text || "Please describe and analyze this image.",
         language: languageSelect.value,
-        history: chatHistory
+        history: chatHistory.map(({ role, text }) => ({ role, text })),
+        image: imageToSend
       })
+
     });
 
     const data = await response.json();
@@ -983,44 +1140,54 @@ async function sendMessage() {
     addMessage("ai", data.reply);
 
     chatHistory.push(
-      { role: "user", text: text },
+      {
+        role: "user",
+        text: text || "Please analyze this image.",
+        imageData: imageToSend
+      },
       { role: "model", text: data.reply }
     );
 
     chatHistory = chatHistory.slice(-20);
+
     saveCurrentChat();
 
     if (speechEnabled) {
       speak(data.reply);
     } else {
-      setAvatarState("speaking");
-
-      speakingFallbackTimer = setTimeout(() => {
-        setAvatarState("idle");
-      }, Math.max(2500, data.reply.length * 45));
+      setAvatarState("idle");
     }
 
   } catch (error) {
+
     typing.remove();
+
     addMessage("ai", "Sorry! " + error.message);
+
     setAvatarState("idle");
 
   } finally {
+
     busy = false;
     sendButton.disabled = false;
     input.focus();
+
   }
 }
 
 /* VOICE LANGUAGE */
 
 function detectSpeechLanguage(text) {
+
   const selected = languageSelect.value;
 
   if (selected === "Hindi") return "hi-IN";
   if (selected === "English") return "en-IN";
 
-  if (selected === "Roman Urdu" || selected === "Hinglish") {
+  if (
+    selected === "Roman Urdu" ||
+    selected === "Hinglish"
+  ) {
     return "hi-IN";
   }
 
@@ -1039,6 +1206,7 @@ function detectSpeechLanguage(text) {
 /* PREFERRED VOICE */
 
 function getPreferredVoice(lang) {
+
   const voices = window.speechSynthesis.getVoices();
 
   const matching = voices.filter(voice =>
@@ -1055,6 +1223,7 @@ function getPreferredVoice(lang) {
 /* CLEAN VOICE TEXT */
 
 function cleanTextForSpeech(text) {
+
   let clean = String(text);
 
   clean = clean.replace(/```[\s\S]*?```/g, " ");
@@ -1067,12 +1236,10 @@ function cleanTextForSpeech(text) {
 
   clean = clean.replace(/^\s{0,3}#{1,6}\s*/gm, "");
   clean = clean.replace(/^\s*>\s?/gm, "");
-
   clean = clean.replace(/\*\*(.*?)\*\*/g, "$1");
   clean = clean.replace(/\*(.*?)\*/g, "$1");
   clean = clean.replace(/__(.*?)__/g, "$1");
   clean = clean.replace(/_(.*?)_/g, "$1");
-
   clean = clean.replace(/[:;*_#`~|]/g, " ");
   clean = clean.replace(/\s+/g, " ");
 
@@ -1082,6 +1249,7 @@ function cleanTextForSpeech(text) {
 /* SPEAK RESPONSE */
 
 function speak(text) {
+
   if (!("speechSynthesis" in window)) {
     setAvatarState("idle");
     return;
@@ -1099,6 +1267,7 @@ function speak(text) {
   }
 
   const lang = detectSpeechLanguage(text);
+
   const speech = new SpeechSynthesisUtterance(speechText);
 
   speech.lang = lang;
@@ -1109,11 +1278,18 @@ function speak(text) {
   let voice = getPreferredVoice(lang);
 
   if (!voice && lang === "ur-PK") {
+
     voice = getPreferredVoice("hi-IN");
-    if (voice) speech.lang = "hi-IN";
+
+    if (voice) {
+      speech.lang = "hi-IN";
+    }
+
   }
 
-  if (voice) speech.voice = voice;
+  if (voice) {
+    speech.voice = voice;
+  }
 
   speech.onstart = () => {
     setAvatarState("speaking");
@@ -1133,19 +1309,24 @@ function speak(text) {
 /* LOAD VOICES */
 
 if ("speechSynthesis" in window) {
+
   window.speechSynthesis.onvoiceschanged = () => {
     window.speechSynthesis.getVoices();
   };
+
 }
 
 /* VOICE ON / OFF */
 
 function toggleSpeech() {
+
   speechEnabled = !speechEnabled;
 
   if (!speechEnabled && "speechSynthesis" in window) {
+
     window.speechSynthesis.cancel();
     setAvatarState("idle");
+
   }
 
   alert(
@@ -1158,27 +1339,36 @@ function toggleSpeech() {
 /* VOICE INPUT */
 
 function startVoice() {
+
   const SpeechRecognition =
     window.SpeechRecognition ||
     window.webkitSpeechRecognition;
 
   if (!SpeechRecognition) {
+
     alert("Voice input is not supported in this browser.");
     return;
+
   }
 
   const recognition = new SpeechRecognition();
   const selected = languageSelect.value;
 
   if (selected === "Hindi") {
+
     recognition.lang = "hi-IN";
+
   } else if (
     selected === "Urdu" ||
     selected === "Roman Urdu"
   ) {
+
     recognition.lang = "hi-IN";
+
   } else {
+
     recognition.lang = "en-IN";
+
   }
 
   recognition.interimResults = false;
@@ -1189,36 +1379,52 @@ function startVoice() {
   };
 
   recognition.onresult = event => {
+
     input.value = event.results[0][0].transcript;
     sendMessage();
+
   };
 
   recognition.onerror = () => {
+
     setAvatarState("idle");
+
     alert("Voice input could not start. Please try again.");
+
   };
 
   recognition.onend = () => {
-    if (!busy) setAvatarState("idle");
+
+    if (!busy) {
+      setAvatarState("idle");
+    }
+
   };
 
   recognition.start();
 }
 
-/* OPTIONAL SPEAKING PHOTO */
+/* CHECK AVATAR IMAGE */
 
-let speakingPhoto = new Image();
+avatarImage.onerror = () => {
 
-speakingPhoto.src = "byco-speaking.png";
+  statusText.textContent = "Avatar image not found";
 
-speakingPhoto.onload = () => {
-  console.log("BYCO speaking pose loaded.");
+  console.error("Could not load byco-avatar (2).png");
+
 };
 
-speakingPhoto.onerror = () => {
-  console.log("Using the main BYCO avatar for all states.");
+avatarImage.onload = () => {
+
+  console.log("BYCO avatar image loaded successfully.");
+
 };
+
+/* INITIAL STATE */
+
+setAvatarState("idle");
 
 </script>
+
 </body>
 </html>
